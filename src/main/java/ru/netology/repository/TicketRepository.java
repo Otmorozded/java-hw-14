@@ -15,7 +15,7 @@ public class TicketRepository {
         items = tmp;
     }
 
-    public TicketOffer[] findAll() {
+    public TicketOffer[] getAll() {
         return items;
     }
 

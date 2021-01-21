@@ -13,7 +13,7 @@ public class TicketManager {
     }
 
     public TicketOffer[] findAll(String from, String to) {
-        TicketOffer[] allTickets = repository.findAll();
+        TicketOffer[] allTickets = repository.getAll();
         TicketOffer[] result = new TicketOffer[0];
 
         for (TicketOffer ticket : allTickets) {
