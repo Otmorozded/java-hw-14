@@ -3,6 +3,8 @@ package ru.netology.manager;
 import ru.netology.domain.TicketOffer;
 import ru.netology.repository.TicketRepository;
 
+import java.util.Arrays;
+
 public class TicketManager {
     private TicketRepository repository;
 
@@ -10,43 +12,27 @@ public class TicketManager {
         this.repository = repository;
     }
 
-
-    public void add(TicketOffer item) {
-        repository.save(item);
-    }
-
-    public TicketOffer[] getAll() {
-        TicketOffer[] items = repository.findAll();
-        TicketOffer[] result = new TicketOffer[items.length];
-        for (int i = 0; i < result.length; i++) {
-            int index = items.length - i - 1;
-            result[i] = items[index];
-        }
-        return result;
-    }
-
-    public void removeById(int id) {
-        repository.removeById(id);
-    }
-
-
     public TicketOffer[] findAll(String from, String to) {
-        TicketOffer[] items = repository.findAll();
+        TicketOffer[] allTickets = repository.findAll();
         TicketOffer[] result = new TicketOffer[0];
-        for (TicketOffer item : items) {
-            if (item.getFrom().equals(from) && item.getTo().equals(to)) {
-                TicketOffer[] tmp = new TicketOffer[result.length + 1];
+
+        for (TicketOffer ticket : allTickets) {
+            if (ticket.getFrom() == from && ticket.getTo() == to) {
+                int length = result.length + 1;
+                TicketOffer[] tmp = new TicketOffer[length];
+
                 System.arraycopy(result, 0, tmp, 0, result.length);
-                tmp[tmp.length - 1] = item;
+
+                int lastIndex = tmp.length - 1;
+                tmp[lastIndex] = ticket;
+
                 result = tmp;
             }
         }
+
+        Arrays.sort(result);
+
         return result;
-    }
-
-
-    public TicketOffer findById(int id) {
-        return repository.findById(id);
     }
 }
 
